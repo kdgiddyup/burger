@@ -1,8 +1,13 @@
 // Import MySQL connection.
 var connection = require("../config/connection.js");
+     /*
+     * `selectAll()` 
+     * `insertOne()` 
+     * `updateOne()`
+      */ 
 
-// Helper function for SQL syntax.
-function printQuestionMarks(num) {
+// helper function returns [?] array as long as input value.
+function formattedValues(num) {
   var arr = [];
 
   for (var i = 0; i < num; i++) {
@@ -10,7 +15,7 @@ function printQuestionMarks(num) {
   }
 
   return arr.toString();
-}
+};
 
 // Helper function for SQL syntax.
 function objToSql(ob) {
@@ -27,7 +32,7 @@ function objToSql(ob) {
 
 // Object for all our SQL statement functions.
 var orm = {
-  all: function(tableInput, cb) {
+  selectAll: function(tableInput, cb) {
     var queryString = "SELECT * FROM " + tableInput + ";";
     connection.query(queryString, function(err, result) {
       if (err) {
@@ -36,15 +41,10 @@ var orm = {
       cb(result);
     });
   },
-  create: function(table, cols, vals, cb) {
-    var queryString = "INSERT INTO " + table;
-
-    queryString += " (";
-    queryString += cols.toString();
-    queryString += ") ";
-    queryString += "VALUES (";
-    queryString += printQuestionMarks(vals.length);
-    queryString += ") ";
+  // insert data into existing row, with one or more columns passed in as an array, 'cols'
+  // uses the formattedValues() helper function
+  insertOne: function(table, cols, vals, cb) {
+    var queryString = "INSERT INTO " + table + "("+cols.toString()+") "+"VALUES ("+formattedValues(vals.length)+") ";
 
     console.log(queryString);
 
@@ -55,14 +55,10 @@ var orm = {
       cb(result);
     });
   },
-  // An example of objColVals would be {name: panther, sleepy: true}
-  update: function(table, objColVals, condition, cb) {
-    var queryString = "UPDATE " + table;
 
-    queryString += " SET ";
-    queryString += objToSql(objColVals);
-    queryString += " WHERE ";
-    queryString += condition;
+  // table update function
+  update: function(table, objColVals, condition, cb) {
+    var queryString = "UPDATE " + table + " SET " + objToSql(objColVals) + " WHERE " + condition;
 
     console.log(queryString);
     connection.query(queryString, function(err, result) {
@@ -72,7 +68,10 @@ var orm = {
 
       cb(result);
     });
-  },
+  }
+  
+  /*
+  ,
   delete: function(table, condition,cb){
     var queryString = "DELETE FROM "+table+"WHERE "+condition;
     console.log(queryString);
@@ -80,6 +79,7 @@ var orm = {
       cb(result);
       });  
   }
+  */
 };
 
 // Export the orm object for the model (cat.js).
