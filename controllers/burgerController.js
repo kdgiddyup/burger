@@ -1,43 +1,46 @@
+// dependencies
 var express = require("express");
-
 var router = express.Router();
 
 // get our burger model
 var burger = require("../models/burgers.js");
 
-// Create all our routes and set up logic within those routes where required.
+// Create our routes
+// index route
 router.get("/", function(req, res) {
-  cat.all(function(data) {
+  // use the burger.all method to print non-devoured and devoured burgers
+  // it only needs the callback function
+  burger.all(function(data) {
     var hbsObject = {
-      cats: data
+      burgers: data
     };
-    console.log(hbsObject);
     res.render("index", hbsObject);
   });
 });
 
+// route hit when new burger is added to db
 router.post("/", function(req, res) {
-  cat.create([
-    "name", "sleepy"
+  // send burgers.create method the columns, values and callback function it requires 
+  burger.create([
+    "burger_name", "devoured"
   ], [
-    req.body.name, req.body.sleepy
+    req.body.name, false
   ], function() {
     res.redirect("/");
   });
 });
 
-router.put("/:id", function(req, res) {
-  var condition = "id = " + req.params.id;
+// this is the route hit when <Devour it!> button is clicked
+router.put("/:id", function(req,res){
+  // use incoming ID in our condition (WHERE id=<id>)
+  var condition = "id = "+req.params.id;
 
-  console.log("condition", condition);
-
-  cat.update({
-    sleepy: req.body.sleepy
-  }, condition, function() {
+  // send burger.js update function our table change object, condition (id=<id>) and a callback function, which reloads the page
+  burger.update({devoured:true},condition,function(){
     res.redirect("/");
   });
 });
-
+    
 
 // Export routes for server.js to use.
 module.exports = router;

@@ -1,10 +1,5 @@
 // Import MySQL connection.
 var connection = require("../config/connection.js");
-     /*
-     * `selectAll()` 
-     * `insertOne()` 
-     * `updateOne()`
-      */ 
 
 // helper function returns [?] array as long as input value.
 function formattedValues(num) {
@@ -57,7 +52,11 @@ var orm = {
   },
 
   // table update function
-  update: function(table, objColVals, condition, cb) {
+  // gets table to update, a table update object (key is column to set; value is value to set), a WHERE condition and a callback function
+
+  updateOne: function(table, objColVals, condition, cb) {
+
+    // build query string for mysql module; includes passing the table update object to the objToSql helper function, which returns a mysql-valid string <col>=<value>
     var queryString = "UPDATE " + table + " SET " + objToSql(objColVals) + " WHERE " + condition;
 
     console.log(queryString);
@@ -69,17 +68,6 @@ var orm = {
       cb(result);
     });
   }
-  
-  /*
-  ,
-  delete: function(table, condition,cb){
-    var queryString = "DELETE FROM "+table+"WHERE "+condition;
-    console.log(queryString);
-    connection.query(queryString,function(result){
-      cb(result);
-      });  
-  }
-  */
 };
 
 // Export the orm object for the model (cat.js).

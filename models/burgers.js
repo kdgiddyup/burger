@@ -2,26 +2,28 @@
 var orm = require("../config/orm.js");
 
 var burgers = {
+  // gets all records from orm.selectAll function by passing desired table and a callback, which just passes  the results back to the .all route at burgerController.js
+  // that is, "cb"" is the anon. function in the burgerController.js route that renders the data called "res" here
   all: function(cb) {
-    orm.all("burgers", function(res) {
+    orm.selectAll("burgers", function(res) {
       cb(res);
     });
   },
-  // The variables cols and vals are arrays.
+
+  // This is the method called when the .put method is used. The variables cols and vals are arrays.
   create: function(cols, vals, cb) {
-    orm.create("cats", cols, vals, function(res) {nstall
+    // send the ORM insertOne method our table, and insert values as cols and vals, and a callback that passes through the res value
+    orm.insertOne("burgers", cols, vals, function(res) {
       cb(res);
     });
   },
+  
+  // gets {key:value} object for a table update, the WHERE condition and a callback
   update: function(objColVals, condition, cb) {
-    orm.update("cats", objColVals, condition, function(res) {
+    // sends orm.updateOne function the table to use and passes through the table update object, condition and a callback to pass results up the chain
+    orm.updateOne("burgers", objColVals, condition, function(res) {
       cb(res);
     });
-  },
-  delete: function(id,cb) {
-     orm.delete("cats",id, function(res){
-       cb(res)
-      })
   }
 };
 

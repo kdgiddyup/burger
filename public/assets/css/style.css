@@ -1,19 +1,37 @@
-li {
-  padding: 5px;
-  margin: 5px;
-  background: #faebd7;
+body {
+  background-image: url(../img/burger.png);
+  background-position: right;
 }
-
-.label {
+.burgerToEat {
+  text-align: center;
   font-weight: bold;
+  float: left;
+ }
+.burgerDevoured {
+  text-align: center;
+  color: #444;
+  font-weight: bold;
+  float: left;
+}
+.title {
+  color: red;
+  text-align: center;
+}
+#overlay {
+  position:fixed;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  opacity: .75;
+  width: 100%;
+  height: 100%;
+}
+.burgerName {
+  margin: 0 20px 0 0;
 }
 
-.create-update-form {
-  padding: 5px;
-  margin: 5px;
-  background: aqua;
+.form {
+  text-align: center;
+  margin: 40px 0 0 0;
 }
 
-.form-group {
-  margin-bottom: 5px;
-}
