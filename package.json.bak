@@ -1,15 +1,8 @@
 {
   "name": "burger",
   "version": "1.0.0",
-  "description": "mvc demo using node, express and handlebars",
+  "description": "node-express-handlebars-mvc demo - Eat Da Burger\"",
   "main": "server.js",
-  "dependencies": {
-    "body-parser": "^1.17.1",
-    "express": "^4.15.2",
-    "express-handlebars": "^3.0.0",
-    "mysql": "^2.13.0"
-  },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
@@ -18,12 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/kdgiddyup/burger.git"
   },
-  "keywords": [
-    "mvc",
-    "express",
-    "handlebars"
-  ],
-  "author": "kdgiddyup",
+  "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/kdgiddyup/burger/issues"
